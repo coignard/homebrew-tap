@@ -1,5 +1,5 @@
 class Lottie < Formula
-  desc "Simple yet powerful Fountain screenplay editor"
+  desc "A simple yet powerful Fountain screenplay editor"
   homepage "https://lottie.rs/"
 
   on_macos do
