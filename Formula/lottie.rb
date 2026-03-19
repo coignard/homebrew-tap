@@ -5,8 +5,8 @@ class Lottie < Formula
 
   on_macos do
     if Hardware::CPU.arm? || Hardware::CPU.intel?
-      url "https://github.com/coignard/lottie/releases/download/#{version}/lottie-universal-apple-darwin.tar.gz"
-      sha256 "4936bc1b2fb04b1dc28dc14b13bd04465fe533a83d6a962e31bf90e11bd84192"
+      url "https://github.com/coignard/lottie/releases/download/0.2.12/lottie-universal-apple-darwin.tar.gz"
+      sha256 "9dde8759eda9f61e27914e683d933459a2700a349e9d5e47e0592319299f665e"
     end
   end
 
