@@ -1,0 +1,39 @@
+name: Update Formula
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: "Version tag"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Compute SHA256
+        id: sha
+        run: |
+          SHA=$(curl -sL \
+            https://github.com/coignard/lottie/releases/download/${{ inputs.version }}/lottie-universal-apple-darwin.tar.gz \
+            | shasum -a 256 | awk '{print $1}')
+          echo "sha256=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Update formula
+        run: |
+          sed -i \
+            -e 's|version ".*"|version "${{ inputs.version }}"|' \
+            -e 's|sha256 ".*"|sha256 "${{ steps.sha.outputs.sha256 }}"|' \
+            -e 's|releases/download/.*/lottie|releases/download/${{ inputs.version }}/lottie|' \
+            Formula/lottie.rb
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/lottie.rb
+          git commit -m "lottie ${{ inputs.version }}"
+          git push
