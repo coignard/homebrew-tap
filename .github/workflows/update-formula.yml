@@ -19,42 +19,39 @@ jobs:
           SHA_MACOS=$(curl -sL \
             https://github.com/coignard/lottie/releases/download/${{ inputs.version }}/lottie-universal-apple-darwin.tar.gz \
             | shasum -a 256 | awk '{print $1}')
-          SHA_LINUX_X86=$(curl -sL \
-            https://github.com/coignard/lottie/releases/download/${{ inputs.version }}/lottie-x86_64-unknown-linux-gnu.tar.gz \
-            | shasum -a 256 | awk '{print $1}')
           SHA_LINUX_ARM=$(curl -sL \
             https://github.com/coignard/lottie/releases/download/${{ inputs.version }}/lottie-aarch64-unknown-linux-gnu.tar.gz \
             | shasum -a 256 | awk '{print $1}')
+          SHA_LINUX_X86=$(curl -sL \
+            https://github.com/coignard/lottie/releases/download/${{ inputs.version }}/lottie-x86_64-unknown-linux-gnu.tar.gz \
+            | shasum -a 256 | awk '{print $1}')
           echo "macos=$SHA_MACOS" >> $GITHUB_OUTPUT
-          echo "linux_x86=$SHA_LINUX_X86" >> $GITHUB_OUTPUT
           echo "linux_arm=$SHA_LINUX_ARM" >> $GITHUB_OUTPUT
+          echo "linux_x86=$SHA_LINUX_X86" >> $GITHUB_OUTPUT
 
       - name: Update formula
+        env:
+          VERSION: ${{ inputs.version }}
+          SHA_MACOS: ${{ steps.sha.outputs.macos }}
+          SHA_LINUX_ARM: ${{ steps.sha.outputs.linux_arm }}
+          SHA_LINUX_X86: ${{ steps.sha.outputs.linux_x86 }}
         run: |
-          VERSION=${{ inputs.version }}
           sed -i \
             -e "s|releases/download/.*/lottie-universal-apple-darwin|releases/download/$VERSION/lottie-universal-apple-darwin|" \
-            -e "s|releases/download/.*/lottie-x86_64-unknown-linux-gnu|releases/download/$VERSION/lottie-x86_64-unknown-linux-gnu|" \
             -e "s|releases/download/.*/lottie-aarch64-unknown-linux-gnu|releases/download/$VERSION/lottie-aarch64-unknown-linux-gnu|" \
+            -e "s|releases/download/.*/lottie-x86_64-unknown-linux-gnu|releases/download/$VERSION/lottie-x86_64-unknown-linux-gnu|" \
             Formula/lottie.rb
-          SHA_MACOS=${{ steps.sha.outputs.macos }}
-          SHA_X86=${{ steps.sha.outputs.linux_x86 }}
-          SHA_ARM=${{ steps.sha.outputs.linux_arm }}
-          python3 - <<EOF
-          import re
-          with open('Formula/lottie.rb', 'r') as f:
-              content = f.read()
-          shas = ['$SHA_MACOS', '$SHA_ARM', '$SHA_X86']
-          i = 0
-          def replacer(m):
-              global i
-              result = f'sha256 "{shas[i]}"'
-              i += 1
-              return result
-          content = re.sub(r'sha256 "[a-f0-9]+"', replacer, content)
-          with open('Formula/lottie.rb', 'w') as f:
-              f.write(content)
-          EOF
+          awk -v macos="$SHA_MACOS" -v arm="$SHA_LINUX_ARM" -v x86="$SHA_LINUX_X86" '
+            /lottie-universal-apple-darwin/ { darwin=1 }
+            /lottie-aarch64-unknown-linux-gnu/ { aarch=1 }
+            /lottie-x86_64-unknown-linux-gnu/ { x86f=1 }
+            /sha256/ {
+              if (darwin) { sub(/"[a-f0-9]+"/, "\"" macos "\""); darwin=0 }
+              else if (aarch) { sub(/"[a-f0-9]+"/, "\"" arm "\""); aarch=0 }
+              else if (x86f) { sub(/"[a-f0-9]+"/, "\"" x86 "\""); x86f=0 }
+            }
+            { print }
+          ' Formula/lottie.rb > Formula/lottie.rb.tmp && mv Formula/lottie.rb.tmp Formula/lottie.rb
 
       - name: Commit and push
         run: |
