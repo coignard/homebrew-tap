@@ -4,23 +4,23 @@ class Lottie < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/coignard/lottie/releases/download/0.2.13/lottie-universal-apple-darwin.tar.gz"
-      sha256 "26d41eb12b69867f1d9a721dd456a0069c1d4c5b4a4f18302b73104c836e66d3"
+      url "https://github.com/coignard/lottie/releases/download/0.2.14/lottie-universal-apple-darwin.tar.gz"
+      sha256 "51403e16c005f839090fc999e38590e1ca1c4ac6b8802b3019a3d57d79e857dd"
     end
     on_intel do
-      url "https://github.com/coignard/lottie/releases/download/0.2.13/lottie-universal-apple-darwin.tar.gz"
-      sha256 "26d41eb12b69867f1d9a721dd456a0069c1d4c5b4a4f18302b73104c836e66d3"
+      url "https://github.com/coignard/lottie/releases/download/0.2.14/lottie-universal-apple-darwin.tar.gz"
+      sha256 "51403e16c005f839090fc999e38590e1ca1c4ac6b8802b3019a3d57d79e857dd"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/coignard/lottie/releases/download/0.2.13/lottie-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "c5df3777a19ea562ff5c5dd7cf184f92bebb51f94d828eff1f0315b4355dbf85"
+      url "https://github.com/coignard/lottie/releases/download/0.2.14/lottie-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "45d1d77ce660f04173ea1dfc1e4fd6d4b22f4c882a559658824d65c0c6f18b65"
     end
     on_intel do
-      url "https://github.com/coignard/lottie/releases/download/0.2.13/lottie-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "7e027331e5eedccf6b6d9d27034edf7da369f64dadeb614190fd6c3752b23dfd"
+      url "https://github.com/coignard/lottie/releases/download/0.2.14/lottie-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "ccbd56bc8003b2e60f04933da09a2478821eef0999697bc0d3a91f13bb670118"
     end
   end
 
