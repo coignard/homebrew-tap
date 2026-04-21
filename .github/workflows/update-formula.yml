@@ -5,6 +5,15 @@ on:
       version:
         required: true
         description: "Version tag"
+      formula:
+        required: true
+        description: "Formula to update"
+        default: "all"
+        type: choice
+        options:
+          - all
+          - lottie
+          - o2
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -12,9 +21,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v6
-
-      - name: Compute SHA256s
-        id: sha
+      - name: Compute SHA256s for lottie
+        id: sha_lottie
+        if: inputs.formula == 'all' || inputs.formula == 'lottie'
         run: |
           SHA_MACOS=$(curl -sL \
             https://github.com/coignard/lottie/releases/download/${{ inputs.version }}/lottie-universal-apple-darwin.tar.gz \
@@ -28,13 +37,29 @@ jobs:
           echo "macos=$SHA_MACOS" >> $GITHUB_OUTPUT
           echo "linux_arm=$SHA_LINUX_ARM" >> $GITHUB_OUTPUT
           echo "linux_x86=$SHA_LINUX_X86" >> $GITHUB_OUTPUT
-
-      - name: Update formula
+      - name: Compute SHA256s for o2
+        id: sha_o2
+        if: inputs.formula == 'all' || inputs.formula == 'o2'
+        run: |
+          SHA_MACOS=$(curl -sL \
+            https://github.com/coignard/o2/releases/download/${{ inputs.version }}/o2-universal-apple-darwin.tar.gz \
+            | shasum -a 256 | awk '{print $1}')
+          SHA_LINUX_ARM=$(curl -sL \
+            https://github.com/coignard/o2/releases/download/${{ inputs.version }}/o2-aarch64-unknown-linux-gnu.tar.gz \
+            | shasum -a 256 | awk '{print $1}')
+          SHA_LINUX_X86=$(curl -sL \
+            https://github.com/coignard/o2/releases/download/${{ inputs.version }}/o2-x86_64-unknown-linux-gnu.tar.gz \
+            | shasum -a 256 | awk '{print $1}')
+          echo "macos=$SHA_MACOS" >> $GITHUB_OUTPUT
+          echo "linux_arm=$SHA_LINUX_ARM" >> $GITHUB_OUTPUT
+          echo "linux_x86=$SHA_LINUX_X86" >> $GITHUB_OUTPUT
+      - name: Update lottie formula
+        if: inputs.formula == 'all' || inputs.formula == 'lottie'
         env:
           VERSION: ${{ inputs.version }}
-          SHA_MACOS: ${{ steps.sha.outputs.macos }}
-          SHA_LINUX_ARM: ${{ steps.sha.outputs.linux_arm }}
-          SHA_LINUX_X86: ${{ steps.sha.outputs.linux_x86 }}
+          SHA_MACOS: ${{ steps.sha_lottie.outputs.macos }}
+          SHA_LINUX_ARM: ${{ steps.sha_lottie.outputs.linux_arm }}
+          SHA_LINUX_X86: ${{ steps.sha_lottie.outputs.linux_x86 }}
         run: |
           sed -i \
             -e "s|releases/download/.*/lottie-universal-apple-darwin|releases/download/$VERSION/lottie-universal-apple-darwin|" \
@@ -52,11 +77,35 @@ jobs:
             }
             { print }
           ' Formula/lottie.rb > Formula/lottie.rb.tmp && mv Formula/lottie.rb.tmp Formula/lottie.rb
-
+      - name: Update o2 formula
+        if: inputs.formula == 'all' || inputs.formula == 'o2'
+        env:
+          VERSION: ${{ inputs.version }}
+          SHA_MACOS: ${{ steps.sha_o2.outputs.macos }}
+          SHA_LINUX_ARM: ${{ steps.sha_o2.outputs.linux_arm }}
+          SHA_LINUX_X86: ${{ steps.sha_o2.outputs.linux_x86 }}
+        run: |
+          sed -i \
+            -e "s|releases/download/.*/o2-universal-apple-darwin|releases/download/$VERSION/o2-universal-apple-darwin|" \
+            -e "s|releases/download/.*/o2-aarch64-unknown-linux-gnu|releases/download/$VERSION/o2-aarch64-unknown-linux-gnu|" \
+            -e "s|releases/download/.*/o2-x86_64-unknown-linux-gnu|releases/download/$VERSION/o2-x86_64-unknown-linux-gnu|" \
+            Formula/o2.rb
+          awk -v macos="$SHA_MACOS" -v arm="$SHA_LINUX_ARM" -v x86="$SHA_LINUX_X86" '
+            /o2-universal-apple-darwin/ { darwin=1 }
+            /o2-aarch64-unknown-linux-gnu/ { aarch=1 }
+            /o2-x86_64-unknown-linux-gnu/ { x86f=1 }
+            /sha256/ {
+              if (darwin) { sub(/"[a-f0-9]+"/, "\"" macos "\""); darwin=0 }
+              else if (aarch) { sub(/"[a-f0-9]+"/, "\"" arm "\""); aarch=0 }
+              else if (x86f) { sub(/"[a-f0-9]+"/, "\"" x86 "\""); x86f=0 }
+            }
+            { print }
+          ' Formula/o2.rb > Formula/o2.rb.tmp && mv Formula/o2.rb.tmp Formula/o2.rb
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Formula/lottie.rb
-          git commit -m "lottie ${{ inputs.version }}"
+          git add Formula/lottie.rb Formula/o2.rb
+          git commit -m "${{ inputs.formula == 'all' && format('lottie {0}, o2 {0}', inputs.version) || format('{0} {1}', inputs.formula, inputs.version) }}" \
+            --allow-empty
           git push
