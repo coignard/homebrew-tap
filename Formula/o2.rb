@@ -1,6 +1,6 @@
 class o2 < Formula
-  desc "Rust implementation of the Orca esoteric language and TUI livecoding environment"
-  homepage "https://lottie.rs/"
+  desc "Rust port of the ORCΛ esoteric programming language and terminal livecoding environment"
+  homepage "https://coignard.org/o2"
 
   on_macos do
     on_arm do
