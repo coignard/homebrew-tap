@@ -16,7 +16,7 @@ class apogee < Formula
   on_linux do
     on_arm do
       url "https://github.com/coignard/apogee/releases/download/0.1.6/apogee-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "2bd682186a2be99bbddc94fcfd4eaa7dd2672b706b50dd010cd98025a01f7ae9"
+      sha256 "92aaadce11ea0a80c175b3d1f7b87b563ef835cfe3b4be2fab04ea81cdcbd69d"
     end
     on_intel do
       url "https://github.com/coignard/apogee/releases/download/0.1.6/apogee-x86_64-unknown-linux-gnu.tar.gz"
