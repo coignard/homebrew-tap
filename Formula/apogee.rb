@@ -4,23 +4,23 @@ class apogee < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/coignard/apogee/releases/download/0.1.6/apogee-universal-apple-darwin.tar.gz"
-      sha256 "db1e03e94aaee08ff6d396192d0ed49805dec6d855cff417088a0f34abd86884"
+      url "https://github.com/coignard/apogee/releases/download/0.2.0/apogee-universal-apple-darwin.tar.gz"
+      sha256 "e71a55f2cfb2b34c871a68f5c70f17890f7851c7a38c8ea216ffa9d80d8c4c9b"
     end
     on_intel do
-      url "https://github.com/coignard/apogee/releases/download/0.1.6/apogee-universal-apple-darwin.tar.gz"
-      sha256 "db1e03e94aaee08ff6d396192d0ed49805dec6d855cff417088a0f34abd86884"
+      url "https://github.com/coignard/apogee/releases/download/0.2.0/apogee-universal-apple-darwin.tar.gz"
+      sha256 "e71a55f2cfb2b34c871a68f5c70f17890f7851c7a38c8ea216ffa9d80d8c4c9b"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/coignard/apogee/releases/download/0.1.6/apogee-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "92aaadce11ea0a80c175b3d1f7b87b563ef835cfe3b4be2fab04ea81cdcbd69d"
+      url "https://github.com/coignard/apogee/releases/download/0.2.0/apogee-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "61f4008d362c0ca48e5860dabbd8501c51bb85504b4c9482bfed4c113a1a9b1e"
     end
     on_intel do
-      url "https://github.com/coignard/apogee/releases/download/0.1.6/apogee-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "c650fffdc5eaa02eff80631d0846409f597b9035e727c12301a00d9589f14b75"
+      url "https://github.com/coignard/apogee/releases/download/0.2.0/apogee-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "6f5cdaf14a60f5cb799357abe62ba2fa6e17085075ec09f808209fe01446b13e"
     end
   end
 
