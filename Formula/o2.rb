@@ -4,23 +4,23 @@ class o2 < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/coignard/o2/releases/download/0.2.5/o2-universal-apple-darwin.tar.gz"
-      sha256 "b239aa1fee0035a44f7c1f2df20bdb0c5ecd56b140e8c30cd9cbba99a2c60880"
+      url "https://github.com/coignard/o2/releases/download/0.2.6/o2-universal-apple-darwin.tar.gz"
+      sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
     end
     on_intel do
-      url "https://github.com/coignard/o2/releases/download/0.2.5/o2-universal-apple-darwin.tar.gz"
-      sha256 "b239aa1fee0035a44f7c1f2df20bdb0c5ecd56b140e8c30cd9cbba99a2c60880"
+      url "https://github.com/coignard/o2/releases/download/0.2.6/o2-universal-apple-darwin.tar.gz"
+      sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/coignard/o2/releases/download/0.2.5/o2-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "2b88da810bef1790d3e3e8a317a96d5f85bf99111907a78bf6abc99181244385"
+      url "https://github.com/coignard/o2/releases/download/0.2.6/o2-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "2c4df1789ba1cf14b62323072f3bc120b947967ba9515897a9dae83f72933f5b"
     end
     on_intel do
-      url "https://github.com/coignard/o2/releases/download/0.2.5/o2-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "1540b16e166d2eeebbac0fd5db5e632e666f9d860030a00198f60bdbd15c042e"
+      url "https://github.com/coignard/o2/releases/download/0.2.6/o2-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "5aa14bd6ea3889d3ec5d518c6e7b2a066003e8dc8308d63c3b3e2d25122349f4"
     end
   end
 
