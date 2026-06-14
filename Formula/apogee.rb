@@ -1,5 +1,5 @@
 class apogee < Formula
-  desc "Apogee BK-01 emulator using the iz80 library"
+  desc "Apogee BK-01 emulator with MIDI support via PPI"
   homepage "https://coignard.org/apogee"
 
   on_macos do
