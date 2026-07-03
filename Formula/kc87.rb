@@ -4,23 +4,23 @@ class kc87 < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/coignard/kc87/releases/download/0.6.1/kc87-universal-apple-darwin.tar.gz"
-      sha256 "c08d94b6901665dc981e03e347cca3035bca43b0d25142f80f1fc71c76ced268"
+      url "https://github.com/coignard/kc87/releases/download/0.7.0/kc87-universal-apple-darwin.tar.gz"
+      sha256 "97b49fb5b1aedd02da0060f74b301df2d374515b9936c868caaa4516b3de2ddc"
     end
     on_intel do
-      url "https://github.com/coignard/kc87/releases/download/0.6.1/kc87-universal-apple-darwin.tar.gz"
-      sha256 "c08d94b6901665dc981e03e347cca3035bca43b0d25142f80f1fc71c76ced268"
+      url "https://github.com/coignard/kc87/releases/download/0.7.0/kc87-universal-apple-darwin.tar.gz"
+      sha256 "97b49fb5b1aedd02da0060f74b301df2d374515b9936c868caaa4516b3de2ddc"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/coignard/kc87/releases/download/0.6.1/kc87-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "3aa1ba35d926bec98fec7bc373c6ed78a8aff3dd00563f98d0981cf2e42b1ff5"
+      url "https://github.com/coignard/kc87/releases/download/0.7.0/kc87-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "7e3c91fa386fda6a69bb8b4c75579b24ab5992a2ddef21d0207e505c7b50164d"
     end
     on_intel do
-      url "https://github.com/coignard/kc87/releases/download/0.6.1/kc87-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "87fe5de7942d1337d7f6d299cfd7e52a235d37fb420b59c272b0cd75066c95ee"
+      url "https://github.com/coignard/kc87/releases/download/0.7.0/kc87-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "022cdbc88cd9bd499bf53fff8df5de063462a1fd2e79fc4751f84d4f4214f2b3"
     end
   end
 
